@@ -3,21 +3,21 @@
     <!-- Theme -->
     <string-array name="theme_entries">
         <item>@string/preference_system</item>
-        <item>Chiaro</item>
-        <item>Scuro</item>
+        <item>浅色模式</item>
+        <item>深色模式</item>
     </string-array>
 
     <!-- Weekdays -->
     <string-array name="weekdays">
-        <item>Domenica</item>
-        <item>Lunedì</item>
-        <item>Sabato</item>
+        <item>周日</item>
+        <item>周一</item>
+        <item>周六</item>
     </string-array>
 
     <!-- Unit System -->
     <string-array name="unit_system_entries">
-        <item>Metrico (km)</item>
-        <item>Imperiale (miglia)</item>
+        <item>公制度量衡（km）</item>
+        <item>英制度量衡（in）</item>
     </string-array>
 
 </resources>
