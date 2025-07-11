@@ -125,6 +125,7 @@
     <!-- Daily Goals -->
     <string name="daily_goals">الهدف اليومي</string>
     <string name="daily_goal_notification">إشعار عند تحقيق الهدف</string>
+    <string name="progress_in_notification">عرض التقدم في الإشعارت</string>
     <string name="daily_goal_target">هدف الخطوات اليومي</string>
     <string name="daily_goal_hint">أدخل هدفك اليومي للخطوات</string>
 
@@ -132,7 +133,7 @@
     <string name="personal_records">الأرقام القياسية الشخصية</string>
     <string name="most_steps_day">أكبر عدد خطوات في يوم واحد</string>
     <string name="most_walked_month">أكثر شهر نشاطًا</string>
-    <string name="streak_record">أطول سلسلة تتجاوز 10,000 خطوة</string>
+    <string name="streak_record">أطول سلسلة تتجاوز %1$s خطوة</string>
     <string name="since_date">منذ %1$s</string>
 
     <!-- Daily Goal Notifications -->
