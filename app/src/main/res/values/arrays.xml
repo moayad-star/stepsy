@@ -62,7 +62,8 @@
         <item>Türkçe</item>
         <item>Россия</item>
         <item>Svenska</item>
-        <item>中文（中国）</item>
+	<item>中文（中国）</item>
+	<item>Arabic (العربية)</item>
     </string-array>
 
     <string-array name="language_values">
@@ -77,7 +78,8 @@
         <item>tr</item>
         <item>ru</item>
         <item>sv</item>
-        <item>zh</item>
+	<item>zh</item>
+        <item>ar</item>
     </string-array>
 
     <!-- Backup Frequency -->
