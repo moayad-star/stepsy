@@ -55,6 +55,8 @@
     <string name="notification_description_paused">Notifier lorsque le comptage est en pause</string>
     <string name="notification_description_steps_day">Pas aujourd\'hui</string>
     <string name="notification_step_counting_paused">Le comptage des pas est en pause</string>
+    <string name="notification_step_goal_progress">Vous avez atteint %1$d%% de votre objectif de pas %2$s</string>
+    <string name="notification_step_goal_completed">Vous avez atteint votre objectif de pas quotidien !</string>
     <string name="step_counting_paused">Comptage des pas en pause</string>
     <string name="step_counting_resumed">Comptage des pas repris</string>
     <string name="action_pause">Pause</string>
@@ -129,6 +131,7 @@
     <!-- Daily Goals -->
     <string name="daily_goals">Objectif quotidien</string>
     <string name="daily_goal_notification">Notifier à l’objectif</string>
+    <string name="progress_in_notification">Afficher la progression dans la notification</string>
     <string name="daily_goal_target">Objectif de pas quotidien</string>
     <string name="daily_goal_hint">Entrez votre objectif de pas quotidien</string>
 
@@ -136,7 +139,7 @@
     <string name="personal_records">Records personnels</string>
     <string name="most_steps_day">Plus grand nombre de pas en un jour</string>
     <string name="most_walked_month">Mois le plus actif</string>
-    <string name="streak_record">Plus longue série de 10 000+ pas</string>
+    <string name="streak_record">Plus longue série de %1$s+ pas</string>
     <string name="since_date">Depuis le %1$s</string>
 
     <!-- Daily Goal Notifications -->

@@ -1,21 +1,14 @@
 package com.nvllz.stepsy.ui
 
 import android.os.Bundle
-import android.text.InputType
-import android.text.method.DigitsKeyListener
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.widget.addTextChangedListener
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.materialswitch.MaterialSwitch
-import com.google.android.material.textfield.TextInputEditText
 import com.nvllz.stepsy.R
 import com.nvllz.stepsy.util.AppPreferences
 import com.nvllz.stepsy.util.Database
@@ -65,92 +58,31 @@ class AchievementsActivity : AppCompatActivity() {
             displayFormat = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
 
             setupViews()
-            initializePreferences()
             loadCachedResultsIfAny()
             updateAchievements()
         }
     }
 
     private fun setupViews() {
-        val notificationSwitch = findViewById<MaterialSwitch>(R.id.notification_switch)
-        var isUserInteraction = false
-
-        notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            lifecycleScope.launch {
-                AppPreferences.dataStore.edit { preferences ->
-                    preferences[AppPreferences.PreferenceKeys.DAILY_GOAL_NOTIFICATION] = isChecked
-                }
-            }
-
-            val goalTargetInput = findViewById<TextInputEditText>(R.id.goal_target_input)
-            goalTargetInput.isEnabled = isChecked
-
-            if (isChecked && isUserInteraction) {
-                goalTargetInput.requestFocus()
-                goalTargetInput.setSelection(goalTargetInput.text?.length ?: 0)
-                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
-                inputMethodManager.showSoftInput(goalTargetInput, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
-            }
-        }
-
-        notificationSwitch.post { isUserInteraction = true }
-
-        findViewById<TextInputEditText>(R.id.goal_target_input).apply {
-            inputType = InputType.TYPE_CLASS_NUMBER
-            keyListener = DigitsKeyListener.getInstance("0123456789")
-
-            setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    saveGoalTargetIfValid(text.toString())
-                }
-            }
-
-            setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    saveGoalTargetIfValid(text.toString())
-                    clearFocus()
-                    true
-                } else {
-                    false
-                }
-            }
-
-            addTextChangedListener { text ->
-                if (!text.isNullOrEmpty()) {
-                    saveGoalTargetIfValid(text.toString())
-                }
-            }
-        }
-
         milestonesAdapter = MilestonesAdapter()
         findViewById<RecyclerView>(R.id.milestones_recycler_view).apply {
             adapter = milestonesAdapter
             layoutManager = LinearLayoutManager(this@AchievementsActivity)
             isNestedScrollingEnabled = false
         }
+
+        updateStreakRecordTitle()
     }
 
-    private fun saveGoalTargetIfValid(text: String) {
-        try {
-            val target = text.toInt()
-            if (target > 0) {
-                lifecycleScope.launch {
-                    AppPreferences.dataStore.edit { preferences ->
-                        preferences[AppPreferences.PreferenceKeys.DAILY_GOAL_TARGET] = target
-                    }
-                }
-            }
-        } catch (_: Exception) {
+    private fun updateStreakRecordTitle() {
+        val streakRecordContainer = findViewById<View>(R.id.streak_record_container)
+        val streakRecordTitle = streakRecordContainer?.findViewById<TextView>(R.id.streak_record_title)
+
+        if (streakRecordTitle != null) {
+            val goalTarget = AppPreferences.dailyGoalTarget
+            val formattedGoal = NumberFormat.getIntegerInstance().format(goalTarget)
+            streakRecordTitle.text = getString(R.string.streak_record, formattedGoal)
         }
-    }
-
-    private fun initializePreferences() {
-        val notificationEnabled = AppPreferences.dailyGoalNotification
-        findViewById<MaterialSwitch>(R.id.notification_switch).isChecked = notificationEnabled
-
-        val dailyTarget = AppPreferences.dailyGoalTarget
-        findViewById<TextInputEditText>(R.id.goal_target_input).setText(dailyTarget.toString())
-        findViewById<TextInputEditText>(R.id.goal_target_input).isEnabled = notificationEnabled
     }
 
     private fun loadCachedResultsIfAny() {
@@ -301,9 +233,10 @@ class AchievementsActivity : AppCompatActivity() {
         var longestStreak = 0
         var streakStart: Long? = null
         var longestStreakRange: Pair<Long, Long>? = null
+        val dailyGoal = AppPreferences.dailyGoalTarget
 
         for (entry in sortedEntries) {
-            if (entry.steps >= 10000) {
+            if (entry.steps >= dailyGoal) {
                 currentStreak++
                 if (streakStart == null) {
                     streakStart = entry.timestamp
