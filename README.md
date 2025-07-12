@@ -40,6 +40,7 @@ Stay active, monitor your progress, and reach your fitness goals — all through
 
 ## Dependencies
 
+- [nvllz/stepsy](https://github.com/nvllz/stepsy/releases/tag/1.5.6) - v 1.5.6
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) - Apache License 2.0
 
 ## Credits
